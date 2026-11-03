@@ -12,13 +12,23 @@
   small { display: block; margin-top: 18px; color: #7d8a99; font-size: 13px; }
 </style></head>
 <body><main><div class="m">R</div><p>Opening RealOdds…</p>
-<p><a id="go" href="https://narrow-expectations-moments-knives.trycloudflare.com/s/709cd085ee7bcc16472c177e">Tap here if it doesn't open</a></p>
+<p><a id="go" href="https://dozen-range-participated-accountability.trycloudflare.com/s/709cd085ee7bcc16472c177e">Tap here if it doesn't open</a></p>
 <small>If it won't load, RealOdds is restarting: try again in a minute.</small></main>
 <script>
   // the permanent link's own ?room=… or #page goes along with it
-  var t = "https://narrow-expectations-moments-knives.trycloudflare.com/s/709cd085ee7bcc16472c177e";
+  var t = "https://dozen-range-participated-accountability.trycloudflare.com/s/709cd085ee7bcc16472c177e";
   var q = location.search ? (t.indexOf("?") < 0 ? "?" : "&") + location.search.slice(1) : "";
-  var dest = t + q + location.hash;
+  var h = location.hash, dest;
+  // a member's sign-in key (api.py /api/auth/keep): the app sends it here once (#ro_keep=…&to=…), it stays on this page's
+  // address, and goes along in the #fragment to wherever RealOdds is now, so a new address doesn't sign them out
+  var keep = h.match(/^#ro_keep=([\w-]{20,120})&to=(.+)$/), key = null;
+  try { if (keep) localStorage.setItem("ro-key", keep[1]); key = localStorage.getItem("ro-key"); } catch (e) {}
+  if (keep) {
+    var to = decodeURIComponent(keep[2]);
+    dest = /^https:\/\/[a-z0-9-]+\.trycloudflare\.com\//.test(to) ? to : t;      // only back to RealOdds itself
+  } else {
+    dest = t + q + (key ? (h ? h + "&" : "#") + "ro_k=" + key : h);
+  }
   document.getElementById("go").href = dest;
   location.replace(dest);
 </script></body></html>
